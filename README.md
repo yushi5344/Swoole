@@ -1,6 +1,6 @@
 # Swoole
 
-##安装swoole  
+## 安装swoole
 
 
 	下载 wget https://github.com/swoole/swoole-src/archive/v1.10.2.tar.gz
@@ -15,7 +15,7 @@
 	php -m 
 
 
-#TCP服务器
+# TCP服务器
 
 	<?php
 	//创建服务器
@@ -74,7 +74,7 @@
     
         Telnet ip地址  9501
 
-#udp服务器
+# udp服务器
 
     $serv=new swoole_server('0.0.0.0',9502,SWOOLE_PROCESS,SWOOLE_SOCK_UDP);
 	//监听数据接收事件
@@ -89,7 +89,7 @@
 
     nc -vuz ip地址 9502
     
-#http服务器
+# http服务器
 
     $serv=new swoole_http_server('0.0.0.0',9503);
 	$serv->on('request',function ($request,$response){
