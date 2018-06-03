@@ -70,4 +70,35 @@
 	  3428   3429   3428   3333 pts/1      3428 S+       0   0:00      \_ php tcp.php
 	  3429   3431   3428   3333 pts/1      3428 S+       0   0:00          \_ php tcp.php
 
-通过网络调试助手 设置发送信息。
+在cmd中
+    
+        Telnet ip地址  9501
+
+#udp服务器
+
+    $serv=new swoole_server('0.0.0.0',9502,SWOOLE_PROCESS,SWOOLE_SOCK_UDP);
+	//监听数据接收事件
+	$serv->on('packet',function ($serv,$data,$fd){
+		//发送数据到响应客户端，反馈信息
+		$serv->sendto($fd['address'],$fd['port'],"server:$data");
+		var_dump($fd);
+	});
+	$serv->start();//启动服务
+	
+在linux上
+
+    nc -vuz ip地址 9502
+    
+#http服务器
+
+    $serv=new swoole_http_server('0.0.0.0',9503);
+	$serv->on('request',function ($request,$response){
+		var_dump($request);
+		$response->header("Content-Type","text/html;charset-utf-8");
+		$response->end('Hello world'.rand(100,999));
+	});
+	$serv->start();
+	
+在浏览器中 
+
+    http://ip地址:9503

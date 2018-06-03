@@ -9,6 +9,6 @@
 	$serv->on('request',function ($request,$response){
 		var_dump($request);
 		$response->header("Content-Type","text/html;charset-utf-8");
-		$response->end('Hello world',rand(100,999));
+		$response->end('Hello world'.rand(100,999));
 	});
 	$serv->start();
