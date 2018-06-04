@@ -102,3 +102,59 @@
 在浏览器中 
 
     http://ip地址:9503
+
+
+
+# websocket服务器
+
+服务端
+
+    //创建websocket服务器
+	$ws=new swoole_websocket_server('0.0.0.0',9501);
+	//open建立连接
+	$ws->on('open',function ($ws,$request){
+		var_dump($request);
+		$ws->push($request->fd,"welcome\n");
+	});
+	//message 接收信息
+	$ws->on('message',function ($ws,$request){
+		echo "Message: $request->data";
+		$ws->push($request->fd,"get it message");
+	});
+	//close 关闭连接
+
+	$ws->on('close',function ($ws,$request){
+		echo "close\n";
+	});
+
+	//启动
+	$ws->start();
+
+
+客户端 js实现
+
+	<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        var wsServer="ws://47.95.218.48:9501";
+        var webSocket=new WebSocket(wsServer);
+        webSocket.onopen=function (evt) {
+            console.log("连接成功");
+        };
+        webSocket.onclose=function (evt) {
+            console.log("关闭");
+        };
+        webSocket.onmessage=function (evt) {
+            console.log(evt.data);
+        };
+        webSocket.onerror=function (evt,e) {
+            console.log("error")
+        }
+    </script>
+    </body>
+    </html>
