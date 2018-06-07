@@ -6,7 +6,7 @@
 	 * Time: 21:57
 	 */
 	//触发函数 异步执行 达到10次 停止
-	swoole_process:sign(SIGALRM,function (){
+	swoole_process::signal(SIGALRM,function (){
 	static $i=0;
 	echo "$i \n";
 	$i++;
